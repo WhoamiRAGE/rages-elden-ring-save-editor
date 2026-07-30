@@ -1,4 +1,4 @@
-# eldensave
+# EldenSave
 
 A save editor for **Elden Ring** (PC, `ER0000.sl2`): edit character stats,
 runes, and inventory (weapons, armor, talismans, spells, Ashes of War) from

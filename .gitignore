@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.sl2
+*.sl2.bak
+*.manual-backup
+.venv/
+*.egg-info/

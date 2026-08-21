@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "eldensave"
 version = "0.1.0"
-description = "A save editor for Elden Ring (PC, ER0000.sl2): stats, runes, and inventory, via a Python library and CLI."
+description = "elden_ring_save_editor.cli:main"
 readme = "README.md"
 license = { file = "LICENSE" }
 authors = [{ name = "rage" }]
@@ -18,7 +18,8 @@ classifiers = [
 ]
 
 [project.scripts]
-eldensave = "eldensave.cli:main"
+EldenSave = "elden_ring_save_editor.cli:main"
+eldensave = "elden_ring_save_editor.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["eldensave*"]

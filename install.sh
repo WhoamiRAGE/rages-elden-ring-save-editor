@@ -8,35 +8,34 @@ VENV_DIR="$REPO_DIR/.venv"
 echo "==> EldenSave installer"
 echo "    repo: $REPO_DIR"
 
-# Ensure ~/.local/bin exists
 mkdir -p "$BIN_DIR"
 
-# Check Python 3
 if ! command -v python3 >/dev/null 2>&1; then
     echo "Error: python3 is not installed."
     exit 1
 fi
 
-# Create virtual environment
 if [ ! -d "$VENV_DIR" ]; then
     echo "==> Creating virtual environment..."
     python3 -m venv "$VENV_DIR"
 fi
 
-# Upgrade pip & install editable inside venv
 echo "==> Installing package in editable mode..."
 "$VENV_DIR/bin/python" -m pip install --upgrade pip >/dev/null 2>&1
 "$VENV_DIR/bin/pip" install -e "$REPO_DIR"
 
-# Create launcher as EldenSave
-echo "==> Creating 'EldenSave' executable launcher..."
+# Launcher yoxlaması: Venv daxilində tapılmasa, birbaşa python module kimi çağırırıq
+echo "==> Creating 'EldenSave' launcher..."
 cat << LAUNCHER > "$BIN_DIR/EldenSave"
 #!/usr/bin/env bash
-exec "$VENV_DIR/bin/EldenSave" "\$@"
+if [ -f "$VENV_DIR/bin/EldenSave" ]; then
+    exec "$VENV_DIR/bin/EldenSave" "\$@"
+else
+    exec "$VENV_DIR/bin/python" -m elden_ring_save_editor "\$@"
+fi
 LAUNCHER
 chmod +x "$BIN_DIR/EldenSave"
 
-# PATH setup
 add_to_path() {
     local rcfile="$1"
     if [ -f "$rcfile" ]; then

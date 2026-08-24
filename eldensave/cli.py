@@ -456,6 +456,26 @@ def cmd_inventory(args: argparse.Namespace) -> int:
     return 0
 
 
+
+def cmd_max_dlc_blessings(args: argparse.Namespace) -> int:
+    """50 Scadutree Fragments = max Scadutree Blessing (level 20).
+    25 Revered Spirit Ashes = max Revered Spirit Ash Blessing (level 10).
+    Both confirmed current numbers, verified via web search."""
+    from .items import GOODS_FULL, item_id_bytes, find
+    save = EldenRingSave.load(args.path)
+    slot = save.slots[args.slot]
+
+    scadutree_fragment = item_id_bytes(find("Scadutree Fragment", GOODS_FULL))
+    revered_spirit_ash = item_id_bytes(find("Revered Spirit Ash", GOODS_FULL))
+
+    slot.add_good(scadutree_fragment, quantity=50)
+    slot.add_good(revered_spirit_ash, quantity=25)
+
+    save.save(args.path)
+    print(f"Slot {args.slot}: 50x Scadutree Fragment, 25x Revered Spirit Ash added "
+          f"(enough to max both Shadow of the Erdtree blessings).")
+    return 0
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="eldensave", description="Elden Ring .sl2 save editor (core CLI)")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -574,6 +594,11 @@ def build_parser() -> argparse.ArgumentParser:
     p_add_all_aow.add_argument("--limit", type=int, help="Only add the first N (for safe incremental testing)")
     p_add_all_aow.add_argument("--skip", type=int, help="Skip the first N (e.g. already added in a previous run)")
     p_add_all_aow.set_defaults(func=cmd_add_all_aow)
+
+    p_dlc_blessings = sub.add_parser("max-dlc-blessings", help="Add max DLC blessings (50 Scadutree, 20 Spirit Ash)")
+    p_dlc_blessings.add_argument("path")
+    p_dlc_blessings.add_argument("--slot", type=int, required=True)
+    p_dlc_blessings.set_defaults(func=cmd_max_dlc_blessings)
 
     return parser
 

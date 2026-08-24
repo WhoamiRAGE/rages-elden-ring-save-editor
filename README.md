@@ -90,6 +90,7 @@ module with `python -m eldensave.cli` from the repo root.
 | `add-all-aow [--limit N] [--skip N]` | Add Ashes of War (supports batching) |
 | `add-raging-wolf-set` | Add the full Raging Wolf armor set |
 | `max-flasks` | Add 30 Golden Seeds + 12 Sacred Tears (enough to fully max flasks) |
+| `max-dlc-blessings` | Add 50 Scadutree Fragments + 25 Revered Spirit Ashes (enough to fully max both Shadow of the Erdtree blessings) |
 
 Item names come from `eldensave/items.py` (`WEAPONS_FULL`, `ARMOR_FULL`,
 `TALISMANS_FULL`, `SPELLS_FULL`, `AOW_FULL`, `GOODS_FULL`). For anything not

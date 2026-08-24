@@ -92,6 +92,8 @@ module with `python -m eldensave.cli` from the repo root.
 | `max-dlc-blessings` | Add 50 Scadutree Fragments + 25 Revered Spirit Ashes (enough to fully max both Shadow of the Erdtree blessings) |
 | `add-smithing-stones` | Add every regular Smithing Stone type (1-8 + Ancient Dragon), 100 each by default |
 | `add-somber-stones` | Add every Somber Smithing Stone type (1-9 + Ancient Dragon), 100 each by default |
+| `add-smithing-stones` | Add every regular Smithing Stone type (1-8 + Ancient Dragon), 100 each by default |
+| `add-somber-stones` | Add every Somber Smithing Stone type (1-9 + Ancient Dragon), 100 each by default |
 
 Item names come from `eldensave/items.py` (`WEAPONS_FULL`, `ARMOR_FULL`,
 `TALISMANS_FULL`, `SPELLS_FULL`, `AOW_FULL`, `GOODS_FULL`). For anything not

@@ -90,6 +90,8 @@ module with `python -m eldensave.cli` from the repo root.
 | `add-all-aow [--limit N] [--skip N]` | Add Ashes of War (supports batching) |
 | `max-flasks` | Add 30 Golden Seeds + 12 Sacred Tears (enough to fully max flasks) |
 | `max-dlc-blessings` | Add 50 Scadutree Fragments + 25 Revered Spirit Ashes (enough to fully max both Shadow of the Erdtree blessings) |
+| `add-smithing-stones` | Add every regular Smithing Stone type (1-8 + Ancient Dragon), 100 each by default |
+| `add-somber-stones` | Add every Somber Smithing Stone type (1-9 + Ancient Dragon), 100 each by default |
 
 Item names come from `eldensave/items.py` (`WEAPONS_FULL`, `ARMOR_FULL`,
 `TALISMANS_FULL`, `SPELLS_FULL`, `AOW_FULL`, `GOODS_FULL`). For anything not

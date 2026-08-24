@@ -476,6 +476,60 @@ def cmd_max_dlc_blessings(args: argparse.Namespace) -> int:
           f"(enough to max both Shadow of the Erdtree blessings).")
     return 0
 
+def cmd_add_somber_stones(args: argparse.Namespace) -> int:
+    """Adds every Somber Smithing Stone tier (1-9 + Ancient Dragon),
+    quantity each controlled by --quantity (default 100)."""
+    from .items import GOODS_FULL, item_id_bytes, find
+
+    save = EldenRingSave.load(args.path)
+    slot = save.slots[args.slot]
+
+    names = [f"Somber Smithing Stone [{i}]" for i in range(1, 10)] + ["Somber Ancient Dragon Smithing Stone"]
+
+    added, failed = [], []
+    for name in names:
+        try:
+            slot.add_good(item_id_bytes(find(name, GOODS_FULL)), quantity=args.quantity)
+            added.append(name)
+        except Exception as e:
+            failed.append((name, str(e)))
+
+    save.save(args.path)
+    print(f"Slot {args.slot}: added {args.quantity}x each of {len(added)} Somber Smithing Stone types")
+    if failed:
+        print(f"  {len(failed)} failed:")
+        for name, err in failed:
+            print(f"    {name}: {err}")
+    return 0
+
+
+def cmd_add_smithing_stones(args: argparse.Namespace) -> int:
+    """Adds every regular Smithing Stone tier (1-8 + Ancient Dragon),
+    quantity each controlled by --quantity (default 100)."""
+    from .items import GOODS_FULL, item_id_bytes, find
+
+    save = EldenRingSave.load(args.path)
+    slot = save.slots[args.slot]
+
+    names = [f"Smithing Stone [{i}]" for i in range(1, 9)] + ["Ancient Dragon Smithing Stone"]
+
+    added, failed = [], []
+    for name in names:
+        try:
+            slot.add_good(item_id_bytes(find(name, GOODS_FULL)), quantity=args.quantity)
+            added.append(name)
+        except Exception as e:
+            failed.append((name, str(e)))
+
+    save.save(args.path)
+    print(f"Slot {args.slot}: added {args.quantity}x each of {len(added)} Smithing Stone types")
+    if failed:
+        print(f"  {len(failed)} failed:")
+        for name, err in failed:
+            print(f"    {name}: {err}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="eldensave", description="Elden Ring .sl2 save editor (core CLI)")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -599,6 +653,18 @@ def build_parser() -> argparse.ArgumentParser:
     p_dlc_blessings.add_argument("path")
     p_dlc_blessings.add_argument("--slot", type=int, required=True)
     p_dlc_blessings.set_defaults(func=cmd_max_dlc_blessings)
+
+    p_somber = sub.add_parser("add-somber-stones", help="Add every Somber Smithing Stone type (1-9 + Ancient Dragon)")
+    p_somber.add_argument("path")
+    p_somber.add_argument("--slot", type=int, required=True)
+    p_somber.add_argument("--quantity", type=int, default=100)
+    p_somber.set_defaults(func=cmd_add_somber_stones)
+
+    p_smithing = sub.add_parser("add-smithing-stones", help="Add every regular Smithing Stone type (1-8 + Ancient Dragon)")
+    p_smithing.add_argument("path")
+    p_smithing.add_argument("--slot", type=int, required=True)
+    p_smithing.add_argument("--quantity", type=int, default=100)
+    p_smithing.set_defaults(func=cmd_add_smithing_stones)
 
     return parser
 
